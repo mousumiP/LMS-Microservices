@@ -32,3 +32,13 @@ jobs:
     - name: Build LMSServiceRegistry with Maven
       working-directory: LMSServiceRegistry
       run: mvn clean install
+    - name: Build & push Docker image
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: mousumi87/lms-service-registry
+        tags: latest
+        registry: docker.io
+        dockerfile: LMSServiceRegistry/Dockerfile
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        directory: LMSServiceRegistry
