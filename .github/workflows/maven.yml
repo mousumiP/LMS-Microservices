@@ -6,13 +6,15 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: LMSServiceRegistry cicd
+name: LMSServiceRegistry Build
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:  
-    branches: [ "master" ]
+    paths:
+      - 'LMSServiceRegistry/**'
+  pull_request:
+    paths:
+      - 'LMSServiceRegistry/**'
 
 jobs:
   build:
@@ -27,5 +29,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Build with Maven
+    - name: Build LMSServiceRegistry with Maven
+      working-directory: LMSServiceRegistry
       run: mvn clean install
