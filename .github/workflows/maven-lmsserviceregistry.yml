@@ -42,3 +42,17 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         directory: LMSServiceRegistry
+    
+    # Deploy to Azure Container Apps
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Deploy to Azure Container Apps
+      run: |
+        az containerapp update \
+          --name learncicd \
+          --resource-group mou-test-rg \
+          --image mousumi87/lms-service-registry:latest \
+          --query properties.configuration.ingress.fqdn
